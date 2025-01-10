@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import CountdownTimer from '../../Components/Countdown/CountdownTimer';
-import  {questions} from '../../db/db'
+
 import {useNavigate} from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
+
 const Exam = () => {
     const navigate = useNavigate()
     const handleTimeUp = () => {
@@ -9,9 +11,14 @@ const Exam = () => {
         navigate('/result')
         // Handle quiz submission or timeout logic here
       };
+
+     
+const dispatch = useDispatch(); 
+const {questions, currentQuestionIndex, score} = useSelector((state) => state.quiz);
+console.log(questions?.questions)
     const [questionNo, setQuestionNo] = useState(0);
     const onNext = () => {
-        if (questionNo < questions.length - 1) {
+        if (questionNo < questions?.questions?.length - 1) {
           setQuestionNo((prev) => prev +1 );  
           console.log(questionNo)
         }
@@ -29,19 +36,25 @@ const Exam = () => {
             return;
         }
      }
+     console.log(questions?.[questionNo])
 
-    const {answer_a, answer_b, answer_c, answer_d} = questions[questionNo]?.answers
+     const { 
+        answer_a = 'N/A', 
+        answer_b = 'N/A', 
+        answer_c = 'N/A', 
+        answer_d = 'N/A' 
+      } = questions?.questions[questionNo]?.answers || {};
     return (
         <>
         <div className='flex w-[100%] h-screen flex-col items-center mx-auto bg-secondary'>
             <CountdownTimer duration={300} onTimeUp={handleTimeUp} />
             <div className='flex flex-col w-[75%] mx-auto  mt-10 items-start '>
                 <div className='text-question '>
-                   <h2 className='font-bold'>Question {questionNo +1 }/{questions.length}</h2> 
+                   <h2 className='font-bold'>Question {questionNo +1 }/{questions?.questions.length}</h2> 
 
                 </div>
                 <div  className='flex flex-col mt-2 w-[100%]'>
-                    <p className='flex text-lg font-bold w-[90%] items-start'>{questions[questionNo]?.question}</p>
+                    <p className='flex text-lg font-bold w-[90%] items-start'>{questions?.questions[questionNo]?.question}</p>
 
 
                 </div>

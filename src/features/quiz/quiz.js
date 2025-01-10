@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const quizSlice = createSlice({
-    name: quiz,
+    name: 'quiz',
     initialState,
     reducers: {
         setQuestions: (state, action) =>{ state.questions = action.payload;
