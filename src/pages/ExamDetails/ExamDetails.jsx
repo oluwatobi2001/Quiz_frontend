@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../lib/api/axios'
+import {} from 'react'
 const ExamDetails = () => {
 const [questionDets, setQuestionDets] = useState([])
   useEffect(() => {
