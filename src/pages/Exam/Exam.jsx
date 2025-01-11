@@ -3,6 +3,7 @@ import CountdownTimer from '../../Components/Countdown/CountdownTimer';
 
 import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
+import { checkAnswer } from '../../lib/quiz/quizSetting';
 
 const Exam = () => {
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ const Exam = () => {
 const dispatch = useDispatch(); 
 const {questions, currentQuestionIndex, score} = useSelector((state) => state.quiz);
 console.log(questions?.questions)
-    const [questionNo, setQuestionNo] = useState(0);
+    
     const onNext = () => {
         if (questionNo < questions?.questions?.length - 1) {
           setQuestionNo((prev) => prev +1 );  
@@ -30,13 +31,14 @@ console.log(questions?.questions)
      const onSumbit = () => {
         const confirmSubmit = window.confirm("Are you sure you want to submit?");
         if(confirmSubmit) {
+            checkAnswer(responses)
             navigate("/result")
         }
         else{ 
             return;
         }
      }
-     console.log(questions?.[questionNo])
+     console.log(questions?.questions?.[currentQuestionIndex])
 
      const { 
         answer_a = 'N/A', 
@@ -50,11 +52,11 @@ console.log(questions?.questions)
             <CountdownTimer duration={300} onTimeUp={handleTimeUp} />
             <div className='flex flex-col w-[75%] mx-auto  mt-10 items-start '>
                 <div className='text-question '>
-                   <h2 className='font-bold'>Question {questionNo +1 }/{questions?.questions.length}</h2> 
+                   <h2 className='font-bold'>Question {currentQuestionIndex +1 }/{questions?.questions.length}</h2> 
 
                 </div>
                 <div  className='flex flex-col mt-2 w-[100%]'>
-                    <p className='flex text-lg font-bold w-[90%] items-start'>{questions?.questions[questionNo]?.question}</p>
+                    <p className='flex text-lg font-bold w-[90%] items-start'>{questions?.questions[currentQuestionIndex]?.question}</p>
 
 
                 </div>
