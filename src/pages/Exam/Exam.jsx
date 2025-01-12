@@ -4,6 +4,7 @@ import CountdownTimer from '../../Components/Countdown/CountdownTimer';
 import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import { checkAnswer } from '../../lib/quiz/quizSetting';
+import { answerQuestion } from '../../features/quiz/quiz';
 
 const Exam = () => {
     const navigate = useNavigate()
@@ -17,16 +18,17 @@ const Exam = () => {
 const dispatch = useDispatch(); 
 const {questions, currentQuestionIndex, score} = useSelector((state) => state.quiz);
 console.log(questions?.questions)
-    
+    const [selectedOption, setSelectedOption]  = useState("")
     const onNext = () => {
-        if (questionNo < questions?.questions?.length - 1) {
-          setQuestionNo((prev) => prev +1 );  
-          console.log(questionNo)
-        }
-        else {
-            setQuestionNo(0)
-        }
+        console.log(currentQuestionIndex)
+        if (currentQuestionIndex < questions?.questions?.length - 1) {
+            dispatch(answerQuestion({index: currentQuestionIndex,
+                option: selectedOption}));
+            console.log(selectedOption);
 
+        }
+        
+setSelectedOption("");
     }
      const onSumbit = () => {
         const confirmSubmit = window.confirm("Are you sure you want to submit?");
@@ -45,7 +47,7 @@ console.log(questions?.questions)
         answer_b = 'N/A', 
         answer_c = 'N/A', 
         answer_d = 'N/A' 
-      } = questions?.questions[questionNo]?.answers || {};
+      } = questions?.questions[currentQuestionIndex]?.answers || {};
     return (
         <>
         <div className='flex w-[100%] h-screen flex-col items-center mx-auto bg-secondary'>
@@ -63,18 +65,20 @@ console.log(questions?.questions)
 
             </div>
             <div className='w-[90%] flex flex-col mx-auto mt-5 justify-center items-center'>
-                <div className=' flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold  hover:bg-primary hover:text-white '>
+                <div className=' flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center 
+                items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold  hover:bg-primary
+                 hover:text-white ' onClick={() =>setSelectedOption(answer_a)}>
                 {answer_a}
 
                 </div>
-                <div className= 'flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white  '>
+                <div onClick={() =>setSelectedOption(answer_b)}  className= 'flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white  '>
                  {answer_b}
 
                 </div>
-                <div className='flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
+                <div onClick={() =>setSelectedOption(answer_c)} className='flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
                     {answer_c}
                 </div>
-                <div className='flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
+                <div onClick={() =>setSelectedOption(answer_d)} className='flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
                    {answer_d}
                 </div>
 
@@ -86,7 +90,7 @@ console.log(questions?.questions)
                     Next
 
                 </button>
-               {questionNo == questions.length -1 &&
+               {currentQuestionIndex == questions?.questions.length - 1 &&
                 <button className='bg-primary mx-auto w-[70%] h-[2.5rem] mt-3 rounded-lg text-white' onClick={onSumbit} >
                 Submit
 

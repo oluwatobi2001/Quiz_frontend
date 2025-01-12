@@ -29,7 +29,7 @@ FetchQuestion();
     <p>
   
   questionDets
-  <a href="/exams"> exam</a>
+  <a href="/exam"> exam</a>
     </p>
 
     </>

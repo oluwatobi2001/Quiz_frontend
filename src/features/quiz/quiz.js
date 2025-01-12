@@ -3,7 +3,9 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
     questions : [],
     currentQuestionIndex: 0,
-    score: 0
+    score: 0,
+    selectedOptions : {}
+
 };
 
 const quizSlice = createSlice({
@@ -15,9 +17,8 @@ const quizSlice = createSlice({
         state.score = 0;
         },
         answerQuestion: (state, action) => {
-            if(action.payload.isCorrect) {
-                state.score += 1;
-            }
+            const {index, option} = action.payload;
+            state.selectedOptions[index] = option;
             state.currentQuestionIndex +=1 ;
 
         },
