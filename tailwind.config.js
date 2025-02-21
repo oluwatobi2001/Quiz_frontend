@@ -21,6 +21,7 @@ export default {
       },
       fontFamily: {
         primary: "Cabinet Grotesk",
+        home: "LuckiestGuy"
       },
     },
     container: {
@@ -35,6 +36,8 @@ export default {
       screens: {
        
         xl: '1304px',
+        md: '768px',
+        sm: '640px'
         
       },
     },

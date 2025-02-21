@@ -4,10 +4,11 @@ import storage  from "redux-persist/lib/storage";
 import {persistStore, persistReducer} from 'redux-persist'
 import quizReducer from '../features/quiz/quiz'
 
-
+import userReducer from '../features/user/user'
 
 const rootReducer  = combineReducers({
-    quiz: quizReducer
+    quiz: quizReducer,
+    user: userReducer
 })
 const persistConfig = {
     key: 'root',

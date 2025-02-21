@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CountdownTimer from '../../Components/Countdown/CountdownTimer';
-
+import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import { checkAnswer } from '../../lib/quiz/quizSetting';
-import { answerQuestion } from '../../features/quiz/quiz';
+
+import { answerQuestion , calculateScore } from '../../features/quiz/quiz';
 
 const Exam = () => {
     const navigate = useNavigate()
     const handleTimeUp = () => {
         alert("Time's up!");
+        dispatch(calculateScore())
         navigate('/result')
         // Handle quiz submission or timeout logic here
       };
 
-     
+    
+      
+
+   
 const dispatch = useDispatch(); 
 const {questions, currentQuestionIndex, score} = useSelector((state) => state.quiz);
 console.log(questions?.questions)
@@ -31,9 +35,12 @@ console.log(questions?.questions)
 setSelectedOption("");
     }
      const onSumbit = () => {
+        dispatch(answerQuestion({index: currentQuestionIndex,
+                option: selectedOption}));
         const confirmSubmit = window.confirm("Are you sure you want to submit?");
         if(confirmSubmit) {
-            checkAnswer(responses)
+            
+            dispatch(calculateScore())
             navigate("/result")
         }
         else{ 
@@ -49,8 +56,10 @@ setSelectedOption("");
         answer_d = 'N/A' 
       } = questions?.questions[currentQuestionIndex]?.answers || {};
     return (
-        <>
-        <div className='flex w-[100%] h-screen flex-col items-center mx-auto bg-secondary'>
+
+       
+        <> {questions.questions[currentQuestionIndex] ?
+            <div className='flex w-[100%] h-screen flex-col items-center mx-auto bg-secondary'>
             <CountdownTimer duration={300} onTimeUp={handleTimeUp} />
             <div className='flex flex-col w-[75%] mx-auto  mt-10 items-start '>
                 <div className='text-question '>
@@ -65,20 +74,20 @@ setSelectedOption("");
 
             </div>
             <div className='w-[90%] flex flex-col mx-auto mt-5 justify-center items-center'>
-                <div className=' flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center 
+                <div className=' flex flex-col h-[3.5rem] w-[80%]  px-1 bg-white cursor-pointer mx-auto justify-center 
                 items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold  hover:bg-primary
-                 hover:text-white ' onClick={() =>setSelectedOption(answer_a)}>
+                 hover:text-white ' onClick={() =>setSelectedOption("answer_a")}>
                 {answer_a}
 
                 </div>
-                <div onClick={() =>setSelectedOption(answer_b)}  className= 'flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white  '>
+                <div onClick={() =>setSelectedOption("answer_b")}  className= 'flex cursor-pointer px-1 flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white  '>
                  {answer_b}
 
                 </div>
-                <div onClick={() =>setSelectedOption(answer_c)} className='flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
+                <div onClick={() =>setSelectedOption("answer_c")} className='flex  px-1 cursor-pointer flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
                     {answer_c}
                 </div>
-                <div onClick={() =>setSelectedOption(answer_d)} className='flex flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
+                <div onClick={() =>setSelectedOption("answer_d")} className='flex  px-1 cursor-pointer flex-col h-[3.5rem] w-[80%] bg-white  mx-auto justify-center items-center mb-[1.5rem] rounded-sm text-textAnswer font-semibold hover:bg-primary hover:text-white '>
                    {answer_d}
                 </div>
 
@@ -98,6 +107,12 @@ setSelectedOption("");
 
             </div>
         </div>
+        
+        : 
+        
+        
+        <p className='flex flex-col items-center justify-center mx-auto '> loading</p>}
+        
         </>
     )
 

@@ -25,14 +25,17 @@ dispatch(setQuestions({questions: res.data}))
 FetchQuestion();
   }, [])
  return (
-    <>
-    <p>
-  
-  questionDets
-  <a href="/exam"> exam</a>
-    </p>
+    <div className='flex h-screen w-full  flex-col items-center justify-center bg-[url(C:\Users\Joshua\quizy\src\assets\bgquiz.jpg)] bg-center bg-no-repeat bg-cover'>
 
-    </>
+
+<h2 className='flex  items-center  text-lg mx-auto justify-center flex-row mb-4 w-full'> Welcome to <span className=" flex  font-home font-[800] text-white px-1">{" "} QUIZY</span></h2>
+    
+  
+  
+  <a href="/login" className='flex flex-col w-[130px] h-[40px] font-[500] shadow-lg bg-white rounded-md text-center justify-center items-center'> Get Started</a>
+    
+
+    </div>
  )
 }
 
