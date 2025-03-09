@@ -10,7 +10,7 @@ const Welcome =() => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/v1/users", {withCredentials: true});
+                const response = await axios.get("https://quizback-oxp5.onrender.com/v1/users", {withCredentials: true});
                 console.log(response.data);
                 setUserInfo(response?.data?.user)
             } catch (error) {

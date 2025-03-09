@@ -35,7 +35,7 @@ fetchUserData()
 const [error, setError] = useState(false);
 
 const Google = () => {
-    window.open("http://localhost:5000/v1/auth/google",  "_self")
+    window.open("https://quizback-oxp5.onrender.com/v1/auth/google",  "_self")
 }
 
 
@@ -44,7 +44,7 @@ const Google = () => {
 
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/v1/auth/login', 
+            const res = await axios.post('https://quizback-oxp5.onrender.com/v1/auth/login', 
         { email: userRef.current.value,
             password: passwordRef.current.value}, {withCredentials: true}) ;
             console.log(res?.data);

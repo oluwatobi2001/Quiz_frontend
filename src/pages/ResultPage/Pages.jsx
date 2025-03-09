@@ -11,7 +11,7 @@ const navigate = useNavigate();
     useEffect(()=> {
 
 const uploadScore  = async() => {
-const res =  await axios.post("http://localhost:5000/v1/users/upload-score" , {
+const res =  await axios.post("https://quizback-oxp5.onrender.com/v1/users/upload-score" , {
     score : Number(score) * 10
    
 }, {withCredentials: true})

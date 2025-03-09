@@ -7,7 +7,7 @@ const LeaderboardDetails = () => {
 const  [scoreboard, setScoreboard] = useState([])
     useEffect(() => {
         const leaderInfo = async () => {
-             const res =  await axios.get("http://localhost:5000/v1/users/score")
+             const res =  await axios.get("https://quizback-oxp5.onrender.com/v1/users/score")
              console.log(res.data);
            
         
