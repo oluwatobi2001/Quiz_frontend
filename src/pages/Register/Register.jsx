@@ -16,7 +16,7 @@ const Register =()=> {
             e.preventDefault();
             console.log("hello")
             try {
-                const res = await axios.post('https://quizback-oxp5.onrender.com/api/auth/register', 
+                const res = await axios.post('https://quizback-oxp5.onrender.com/v1/users', 
             { username: userRef.current.value,
                 email: emailRef.current.value,
                 FullName: FullRef.current.value,
@@ -46,20 +46,16 @@ console.log("help")
                               <input type="text" placeholder="Full Name" className="flex w-full rounded-2xl h-[50px] border-2 p-2 mb-2 border-gray-900" ref={FullRef} />  
     <input type="password" placeholder="Password" className="flex w-full rounded-2xl h-[50px] border-2 p-2 mb-2 border-gray-900" ref={passwordRef} />
  
-    <button className="flex flex-col mx-auto rounded-2xl cursor-pointer  text-white bg-primary lg:w-[50%] w-[80%] h-[30px] text-center items-center justify-center" type="submit">Register</button>
+    <button className="flex flex-col mx-auto rounded-2xl cursor-pointer  text-white bg-primary  w-[80%] lg:w-[50%] h-[40px] text-center items-center justify-center" type="submit">Register</button>
                         </div>
                         
-                        <div className='flex flex-row lg:w-[60%] w-[95%] mx-auto items-center justify-center cursor-pointer rounded-3xl border-[0.5px] border-gray-900  px-1' onClick={Google}>
-                            <img src={google} className='flex w-[30px] h-[30px] items-center ' />
-                            <p className='flex items-center '>Sign in with Google</p>
-                            </div>    
-                            <p>Sign in with Google</p>
+                         
                           
                         <div className="">
                        
    
     <div className=" flex flex-col  mt-1 w-full ">
-        <p className='flex flex-row w-full mx-auto items-center justify-center'> Registered previously,  <a href="/login"> Login</a></p>
+        <p className='flex flex-row w-full mx-auto items-center justify-center '> Registered previously,  <a href="/login" className='pl-1'> Login</a></p>
     </div>{error ? "Error while registering, try again" : ""}
                         </div>
                     </form>
